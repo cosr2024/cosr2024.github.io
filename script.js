@@ -1,4 +1,4 @@
-const CONFIG_URL = 'https://raw.githubusercontent.com/cosr2024/cosr2024.github.io/dev/config.json';
+const CONFIG_URL = 'https://raw.githubusercontent.com/cosr2024/cosr2024.github.io/main/config.json';
 
 async function fetchTargetTime() {
   const res = await fetch(CONFIG_URL + '?t=' + Date.now());

@@ -1,0 +1,24 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #fafafa;
+  color: #333;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: auto;
+}
+
+input, button {
+  margin: 10px;
+  padding: 10px;
+  font-size: 1em;
+}
+
+#countdown {
+  font-size: 2em;
+  margin-top: 20px;
+}

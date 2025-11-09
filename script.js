@@ -1,4 +1,4 @@
-const CONFIG_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/time-countdown/main/config.json';
+const CONFIG_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/time-countdown/dev/config.json';
 
 async function fetchTargetTime() {
   const res = await fetch(CONFIG_URL + '?t=' + Date.now());

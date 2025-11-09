@@ -1,4 +1,4 @@
-const CONFIG_URL = 'https://raw.githubusercontent.com/YOUR_USERNAME/time-countdown/dev/config.json';
+const CONFIG_URL = 'https://raw.githubusercontent.com/cosr2024/cosr2024.github.io/dev/config.json';
 
 async function fetchTargetTime() {
   const res = await fetch(CONFIG_URL + '?t=' + Date.now());
@@ -34,39 +34,5 @@ async function init() {
     updateCountdown(targetTime);
   }, 1000);
 }
-
-// Admin update
-async function updateTargetTime() {
-  const token = document.getElementById('admin-token').value;
-  const newTime = new Date(document.getElementById('new-time').value);
-  const status = document.getElementById('update-status');
-
-  if (!token || !newTime) {
-    status.textContent = "Please enter token and time.";
-    return;
-  }
-
-  const body = {
-    message: "Update target time",
-    content: btoa(JSON.stringify({ target_time: newTime.toISOString() })),
-  };
-
-  const res = await fetch('https://api.github.com/repos/YOUR_USERNAME/time-countdown/contents/config.json', {
-    method: 'PUT',
-    headers: {
-      'Authorization': `token ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (res.ok) {
-    status.textContent = "Updated successfully!";
-  } else {
-    status.textContent = "Failed to update.";
-  }
-}
-
-document.getElementById('update-btn').addEventListener('click', updateTargetTime);
 
 init();

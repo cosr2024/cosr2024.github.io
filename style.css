@@ -12,6 +12,12 @@ body {
   margin: auto;
 }
 
+input, button {
+  margin: 10px;
+  padding: 10px;
+  font-size: 1em;
+}
+
 #countdown {
   font-size: 2em;
   margin-top: 20px;

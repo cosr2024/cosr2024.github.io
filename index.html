@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Countdown Timer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Countdown to Target Time</h1>
+    <div id="current-time"></div>
+    <div id="target-time"></div>
+    <div id="countdown"></div>
+
+    <hr>
+
+    <h3>Admin Controls</h3>
+    <div id="admin-panel">
+      <input type="password" id="admin-token" placeholder="GitHub token" />
+      <input type="datetime-local" id="new-time" />
+      <button id="update-btn">Update Target Time</button>
+      <p id="update-status"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

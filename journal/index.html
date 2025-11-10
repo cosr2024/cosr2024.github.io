@@ -18,8 +18,24 @@
 
   <div class="container">
     <h1>Journal</h1>
-    <p>So you can write everything down in one spot.</p>
+
+    <div class="journal-controls">
+      <button id="mode-toggle" class="btn">Edit</button>
+      <button id="submit-btn" class="btn" style="display:none">Submit</button>
+    </div>
+    <p id="journal-status" class="status" aria-live="polite"></p>
+
+    <div id="editor-wrapper" class="journal-editor" style="display:none">
+      <textarea id="editor" placeholder="Write your markdown here..."></textarea>
+    </div>
+
+    <div id="viewer" class="journal-viewer"></div>
   </div>
+
+  <!-- Load markdown parser and sanitizer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script src="/journal/journal.js"></script>
 
   <script>
     if (window.APP && window.APP.DEV_MODE === true) {

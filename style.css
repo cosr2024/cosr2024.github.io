@@ -61,3 +61,29 @@ input, button {
   font-weight: 700;
   z-index: 9999;
 }
+
+/* Navigation bar */
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  background: #1f1f1f;
+  padding: 10px 6px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.nav-link {
+  color: #f5e9da;
+  text-decoration: none;
+  padding: 6px 10px;
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  background: #c22929;
+  color: #fff;
+}
+
+.nav-bar.local { margin-top: 6px; }

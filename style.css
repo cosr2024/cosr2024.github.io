@@ -1,9 +1,10 @@
 body {
   font-family: Arial, sans-serif;
-  background: #fafafa;
-  color: #333;
+  background: #2b2b2b;
+  color: #c22929;
   text-align: center;
   margin-top: 40px;
+  transition: padding-top 0.15s ease;
 }
 
 .container {
@@ -21,4 +22,42 @@ input, button {
 #countdown {
   font-size: 2em;
   margin-top: 20px;
+}
+
+/* Quote styling: at least as large as an h1 and with a gothic/cursive flavor */
+.quote {
+  margin-top: 18px;
+  font-size: 2.5em; /* at least as large as a level-1 header */
+  line-height: 1.15;
+  color: #c22929;
+  font-style: italic;
+  /* Try a decorative/gothic stack, fall back to serif */
+  /* font-family: "Cinzel", "Cinzel Decorative", "Old English Text MT", Georgia, serif; */
+  font-family: serif;
+  text-shadow: 0 4px 0 rgba(0,0,0,0.4);
+}
+
+.btn {
+  margin-top: 12px;
+  padding: 8px 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  background: #c22929;
+  color: #fff;
+  border: none;
+}
+
+/* Dev-mode banner shown when DEV_MODE true */
+.dev-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(200,20,20,0.95);
+  color: #fff;
+  text-align: center;
+  padding: 8px 12px;
+  font-weight: 700;
+  z-index: 9999;
 }

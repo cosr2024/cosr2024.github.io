@@ -3,17 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Countdown Timer</title>
+  <title>CoS Timer</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="dev-banner" class="dev-banner" style="display:none">DEVELOPMENT MODE</div>
   <div class="container">
-    <h1>Countdown to Target Time</h1>
+    <h1>Countdown to Next Session</h1>
     <div id="current-time"></div>
     <div id="target-time"></div>
     <div id="countdown"></div>
+    <div id="quote" class="quote"></div>
+    <div>
+      <button id="new-quote-btn" class="btn">New Quote</button>
+    </div>
   </div>
 
+  <script src="config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journal</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/config.js"></script>
+</head>
+<body>
+  <div id="dev-banner" class="dev-banner" style="display:none">DEVELOPMENT MODE</div>
+  <nav class="nav-bar">
+    <a class="nav-link" href="/">Timer</a>
+    <a class="nav-link" href="/journal/">Journal</a>
+    <a class="nav-link" href="/log/">Log</a>
+    <a class="nav-link" href="/update/">Update</a>
+  </nav>
+
+  <div class="container">
+    <h1>Journal</h1>
+
+    <div class="journal-controls">
+      <button id="mode-toggle" class="btn">Edit</button>
+      <button id="submit-btn" class="btn" style="display:none">Submit</button>
+    </div>
+    <p id="journal-status" class="status" aria-live="polite"></p>
+
+    <div id="editor-wrapper" class="journal-editor" style="display:none">
+      <textarea id="editor" placeholder="Write your markdown here..."></textarea>
+    </div>
+
+    <div id="viewer" class="journal-viewer"></div>
+  </div>
+
+  <!-- Load markdown parser and sanitizer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script src="/journal/journal.js"></script>
+
+  <script>
+    if (window.APP && window.APP.DEV_MODE === true) {
+      const banner = document.getElementById('dev-banner');
+      if (banner) banner.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

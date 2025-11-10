@@ -48,6 +48,70 @@ input, button {
   border: none;
 }
 
+.status {
+  color: #f5e9da;
+  margin-top: 8px;
+  min-height: 1.2em;
+}
+
+/* Journal editor */
+.journal-editor textarea#editor {
+  width: 100%;
+  min-height: 320px;
+  padding: 12px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Courier New', monospace;
+  font-size: 1rem;
+  color: #f5e9da;
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 6px;
+}
+
+.journal-viewer {
+  text-align: left;
+  margin-top: 12px;
+  color: #f5e9da;
+}
+
+.journal-viewer h1, .journal-viewer h2, .journal-viewer h3 {
+  color: #f5e9da;
+}
+
+/* Log styles */
+.log-controls textarea#new-entry {
+  width: 100%;
+  min-height: 160px;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: #151515;
+  color: #f5e9da;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 6px;
+}
+
+.log-entry {
+  background: rgba(255,255,255,0.02);
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.log-date {
+  margin: 0 0 8px 0;
+  color: #f5e9da;
+  font-size: 1rem;
+}
+
+.log-content {
+  color: #f5e9da;
+}
+
+.entry-buttons { margin-top: 10px; }
+
+.entry-edit { width: 100%; min-height: 120px; margin-top: 8px; }
+
 /* Dev-mode banner shown when DEV_MODE true */
 .dev-banner {
   position: fixed;
@@ -61,3 +125,29 @@ input, button {
   font-weight: 700;
   z-index: 9999;
 }
+
+/* Navigation bar */
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  background: #1f1f1f;
+  padding: 10px 6px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.nav-link {
+  color: #f5e9da;
+  text-decoration: none;
+  padding: 6px 10px;
+  font-weight: 700;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  background: #c22929;
+  color: #fff;
+}
+
+.nav-bar.local { margin-top: 6px; }

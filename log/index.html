@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/config.js"></script>
+</head>
+<body>
+  <div id="dev-banner" class="dev-banner" style="display:none">DEVELOPMENT MODE</div>
+  <nav class="nav-bar">
+    <a class="nav-link" href="/">Timer</a>
+    <a class="nav-link" href="/journal/">Journal</a>
+    <a class="nav-link" href="/log/">Log</a>
+    <a class="nav-link" href="/update/">Update</a>
+  </nav>
+
+  <div class="container">
+    <h1>Log</h1>
+
+    <div class="log-controls">
+      <textarea id="new-entry" placeholder="Write a new log entry (markdown supported)..."></textarea>
+      <div>
+        <button id="new-submit" class="btn">Add Entry</button>
+      </div>
+    </div>
+
+    <div id="entries" class="entries"></div>
+  </div>
+  <!-- markdown + sanitizer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+  <script src="/log/log.js"></script>
+
+  <script>
+    if (window.APP && window.APP.DEV_MODE === true) {
+      const banner = document.getElementById('dev-banner');
+      if (banner) banner.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

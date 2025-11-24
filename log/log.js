@@ -95,102 +95,61 @@
   async function loadEntries() {
     const isDev = (window.APP && window.APP.DEV_MODE === true);
 
-    // Prefer a human-editable content.md (similar to the Journal workflow).
-    // Priority:
-    // - If not DEV: try the public raw GitHub main/log/content.md
-    // - If DEV: try local /log/content.md
-    // If content.md exists, attempt to parse into entries (JSON or markdown sections). If not, fall back
-    // to entries.json (previous behavior), then localStorage.
-    async function tryLoadContentMd(url) {
+    async function tryFetchJson(url) {
       try {
         const r = await fetch(url);
         if (!r.ok) return null;
-        const txt = await r.text();
-        return txt;
-      } catch (err) {
-        return null;
-      }
+        return await r.json();
+      } catch (e) { return null; }
     }
 
-    let mdText = null;
-    if (!isDev) {
-      const remoteMdUrl = 'https://raw.githubusercontent.com/cosr2024/cosr2024.github.io/main/log/content.md?t=' + Date.now();
-      mdText = await tryLoadContentMd(remoteMdUrl);
-    } else {
-      mdText = await tryLoadContentMd('content.md?t=' + Date.now());
-    }
-
-    if (mdText) {
-      // Attempt to interpret content.md. It can be either a JSON array or one markdown file containing
-      // multiple entries separated by a '---' line. We also try to detect a leading date header per entry
-      // like '09 November 2025' (optionally preceded by markdown header '#').
-      const trimmed = mdText.trim();
-      if (trimmed.startsWith('[')) {
-        try {
-          const data = JSON.parse(trimmed);
-          if (Array.isArray(data)) { entries = data; return; }
-        } catch (e) {
-          console.debug('log: content.md JSON parse failed', e);
-        }
-      }
-
-      // Split on markdown horizontal rule '---' on its own line
-      const chunks = mdText.split(/^---\s*$/m).map(c=>c.trim()).filter(Boolean);
-      if (chunks.length) {
-        const parsed = chunks.map((chunk, idx) => {
-          // try to extract a leading date line like '# 09 November 2025' or '09 November 2025'
-          const lines = chunk.split(/\r?\n/);
-          let createdAt = new Date().toISOString();
-          let firstLine = lines[0].trim();
-          const dateMatch = firstLine.match(/^#{0,6}\s*(\d{1,2}\s+[A-Za-z]+\s+\d{4})$/);
-          let contentLines = lines;
-          if (dateMatch) {
-            const dateStr = dateMatch[1];
-            const parsedDate = new Date(dateStr);
-            if (!isNaN(parsedDate)) createdAt = parsedDate.toISOString();
-            contentLines = lines.slice(1);
-          }
-          return {
-            id: (Date.now() + idx).toString(),
-            createdAt,
-            content: contentLines.join('\n').trim()
-          };
-        });
-        entries = parsed;
-        return;
-      }
-    }
-
-    // If content.md wasn't found or parsed, fall back to entries.json like before
-    if (!isDev) {
-      // try remote entries.json
+    async function tryFetchText(url) {
       try {
-        const url = 'https://raw.githubusercontent.com/cosr2024/cosr2024.github.io/main/log/entries.json?t=' + Date.now();
-        const res = await fetch(url);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data)) { entries = data; return; }
-        }
-      } catch (err) { console.debug('log: remote load failed', err); }
-    } else {
-      // dev: try local entries.json
-      try {
-        const res = await fetch('entries.json?t=' + Date.now());
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data)) { entries = data; return; }
-        }
-      } catch (err) { console.debug('log: local entries.json not available', err); }
+        const r = await fetch(url);
+        if (!r.ok) return null;
+        return await r.text();
+      } catch (e) { return null; }
     }
 
-    // fallback to localStorage
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) { entries = JSON.parse(saved); return; }
-    } catch(e) { console.error('log: load from storage failed', e); }
+    // Load index.json listing filenames from log/entries/
+    let index = null;
+    if (isDev) {
+      index = await tryFetchJson('entries/index.json?t=' + Date.now());
+    } else {
+      const idxUrl = 'https://raw.githubusercontent.com/cosr2024/cosr2024.github.io/main/log/entries/index.json?t=' + Date.now();
+      index = await tryFetchJson(idxUrl);
+    }
 
-    // start empty
-    entries = [];
+    if (!Array.isArray(index) || index.length === 0) {
+      alert('No log entries found. Please contact the site owner or enable DEV_MODE to load local entries.');
+      entries = [];
+      return;
+    }
+
+    const loaded = [];
+    for (const name of index) {
+      let txt = null;
+      if (isDev) {
+        txt = await tryFetchText('entries/' + name + '?t=' + Date.now());
+      } else {
+        const raw = 'https://raw.githubusercontent.com/cosr2024/cosr2024.github.io/main/log/entries/' + encodeURIComponent(name) + '?t=' + Date.now();
+        txt = await tryFetchText(raw);
+      }
+      if (txt !== null) {
+        const base = name.replace(/\.[^/.]+$/, '');
+        const created = new Date(base);
+        loaded.push({ id: name, createdAt: isNaN(created) ? new Date().toISOString() : created.toISOString(), content: txt.trim() });
+      }
+    }
+
+    if (!loaded.length) {
+      alert('No log entries could be loaded from the listed files.');
+      entries = [];
+      return;
+    }
+
+    loaded.sort((a,b)=> new Date(b.createdAt) - new Date(a.createdAt));
+    entries = loaded;
   }
 
   newSubmit.addEventListener('click', ()=>{
